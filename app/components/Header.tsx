@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
       )}
     >
       <div className="flex items-center justify-between w-full mb-4">
-        <div className="items-center hidden md:flex gpa-x-2">
+        <div className="items-center hidden md:flex gap-x-2">
           <button className="flex items-center justify-center transition bg-black rounded-full hover:opacity-75">
             <RxCaretLeft
               onClick={() => router.back()}
@@ -65,6 +65,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           </>
         </div>
       </div>
+      {children}
     </div>
   );
 };
