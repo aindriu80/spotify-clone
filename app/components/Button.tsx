@@ -6,6 +6,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, children, disabled, type = "button", ...props }, ref) => {
     return (
       <button
+        onClick={(onClick) => {}}
         type={type}
         className={twMerge(
           `w-full rounded-full bg-green-500 border border-transparent
