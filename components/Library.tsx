@@ -5,6 +5,10 @@ import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
 
+interface LibraryProps{
+  songs: Song
+}
+
 const Library = () => {
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
