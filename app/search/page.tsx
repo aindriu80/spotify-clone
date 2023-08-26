@@ -22,7 +22,7 @@ const Search = async ({ searchParams }: SearchProps) => {
 					<SearchInput />
 				</div>
 			</Header>
-      <SearchContent />
+      <SearchContent songs={songs}/>
 		</div>
 	)
 }
