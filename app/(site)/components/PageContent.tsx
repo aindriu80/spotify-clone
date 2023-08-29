@@ -7,7 +7,7 @@ interface PageContentProps {
 	songs:Song[];
 }
 
-const PageContents:React.FC<PageContentProps>  = ({
+const PageContent:React.FC<PageContentProps>  = ({
 	songs})=>{
 		if(songs.length ===0){
 			return <div className="mt-4 text-neutral-400">No songs available</div>
@@ -18,4 +18,4 @@ const PageContents:React.FC<PageContentProps>  = ({
 	)
 }
  
-export default PageContents;
+export default PageContent;
