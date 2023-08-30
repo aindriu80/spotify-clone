@@ -1,9 +1,11 @@
 "use client"
 
+import MediaItem from '@/components/MediaItem';
 import { useUser } from '@/hooks/useUser';
 import { Song } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import LikeButton from '@/components/LikeButton';
 
 interface LikedContentProps{
 	songs:Song[]
@@ -25,7 +27,19 @@ const LikedContent:React.FC<LikedContentProps>  = ({songs}) => {
 		)
 	}
 
-	return ( <div className="">Liked Content</div> );
+	return ( <div className="flex flex-col w-full p-6 gap-y-2">
+		{songs.map((song)=>(
+			<div
+			key={song.id}
+			className="flex items-center w-full gap-x-4"
+			>
+				<div className="flex-1">
+					<MediaItem onClick={()=>{}} data={song}/>
+				</div>
+        <LikeButton songId={song.id}/>
+				</div>
+		))}
+	</div> );
 }
  
 export default LikedContent;
