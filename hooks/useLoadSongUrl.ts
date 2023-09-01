@@ -11,6 +11,8 @@ const useLoadSongUrl = (song:Song)=>{
 	.storage
   .from('songs')
 	.getPublicUrl(song.song_path)
+
+	return songData.publicUrl
 }
 
 export default useLoadSongUrl

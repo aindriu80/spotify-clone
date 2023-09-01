@@ -4,7 +4,7 @@ import {Song} from '@/types'
 import {useSessionContext} from "@supabase/auth-helpers-react"
 import { toast  }from 'react-hot-toast'
 
-const useGetSongById = (id?:string)=>{
+const useSongById = (id?:string)=>{
 	const [isLoading, setIsLoading] = useState(false)
 	const [song, setSong] = useState<Song | undefined>(undefined)
 	const {supabaseClient} = useSessionContext()
@@ -40,4 +40,4 @@ const useGetSongById = (id?:string)=>{
 	}), [isLoading, song])
 }
 
-export default useGetSongById
+export default useSongById
