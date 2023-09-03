@@ -1,15 +1,15 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { twMerge } from "tailwind-merge";
-import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
-import { HiHome } from "react-icons/hi";
-import { BiSearch } from "react-icons/bi";
-import Button from "./Button";
-import useAuthModal from "@/hooks/useAuthModal";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useUser } from "@/hooks/useUser";
-import { FaUserAlt } from "react-icons/fa";
-import toast from "react-hot-toast";
+'use client';
+import { useRouter } from 'next/navigation';
+import { twMerge } from 'tailwind-merge';
+import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
+import { HiHome } from 'react-icons/hi';
+import { BiSearch } from 'react-icons/bi';
+import Button from './Button';
+import useAuthModal from '@/hooks/useAuthModal';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useUser } from '@/hooks/useUser';
+import { FaUserAlt } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Logged out");
+      toast.success('Logged out');
     }
   };
   return (
@@ -70,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
               <Button onClick={handleLogout} className="px-6 py-2 bg-white">
                 Logout
               </Button>
-              <Button onClick={() => router.push("/account")}>
+              <Button onClick={() => router.push('/account')}>
                 <FaUserAlt />
               </Button>
             </div>

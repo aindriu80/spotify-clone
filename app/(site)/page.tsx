@@ -1,12 +1,12 @@
 import getSongs from '@/actions/getSongs';
-import Header from "../../components/Header";
-import ListItem from "../../components/ListItem";
+import Header from '../../components/Header';
+import ListItem from '../../components/ListItem';
 import PageContent from './components/PageContent';
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export default async function Home() {
-  const songs = await getSongs()
+  const songs = await getSongs();
 
   return (
     <div className="w-full h-full overflow-hidden overflow-y-auto rounded-lg bg-neutral-900">
@@ -17,7 +17,7 @@ export default async function Home() {
             <ListItem
               image="/images/liked.png"
               name="Liked Songs"
-              href="liked" 
+              href="liked"
             />
           </div>
         </div>
@@ -26,7 +26,7 @@ export default async function Home() {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-white">Newest Songs</h1>
         </div>
-      <PageContent songs={songs}/>
+        <PageContent songs={songs} />
       </div>
     </div>
   );

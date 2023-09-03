@@ -2,6 +2,5 @@
   "printWidth": 80, 
   "singleQuote": true,
   "trailingComma": "es5",
-  "tailwindCSS.sortAlphabetically": true,
-  "plugins": ["prettier-plugin-tailwind"]
+  "tailwindCSS.sortAlphabetically": true  
 }

@@ -1,24 +1,23 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
-import Sidebar from "../components/Sidebar";
-import SupabaseProvider from "@/providers/SupabaseProvider";
-import UserProvider from "@/providers/UserProvider";
-import ModalProvider from "@/providers/ModalProvider";
-import ToasterProvider from "@/providers/ToasterProvider";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Figtree } from 'next/font/google';
+import Sidebar from '../components/Sidebar';
+import SupabaseProvider from '@/providers/SupabaseProvider';
+import UserProvider from '@/providers/UserProvider';
+import ModalProvider from '@/providers/ModalProvider';
+import ToasterProvider from '@/providers/ToasterProvider';
 import getSongsByUserId from '@/actions/getSongsByUserId';
 import Player from '@/components/Player';
 
-const font = Figtree({ subsets: ["latin"] });
+const font = Figtree({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Spotify Clone",
+  title: 'Spotify Clone',
   description:
-    "A full stack Spotify clone in Next 13.4 with React, Stripe, Supabase, PostgreSQL and Tailwind CSS ",
+    'A full stack Spotify clone in Next 13.4 with React, Stripe, Supabase, PostgreSQL and Tailwind CSS ',
 };
 
 export const revalidate = 0;
-
 
 export default async function RootLayout({
   children,
@@ -34,7 +33,7 @@ export default async function RootLayout({
           <UserProvider>
             <ModalProvider />
             <Sidebar songs={userSongs}>{children}</Sidebar>
-            <Player/>
+            <Player />
           </UserProvider>
         </SupabaseProvider>
       </body>
