@@ -1,13 +1,13 @@
-import Stripe from "stripe";
-import { metadata } from "./app/layout";
+import Stripe from 'stripe';
+import { metadata } from './app/layout';
 
 export interface Song {
   id: string;
-  user_id:string;
-  author:string;
-  title:string;
-  song_path:string;
-  image_path:string;
+  user_id: string;
+  author: string;
+  title: string;
+  song_path: string;
+  image_path: string;
 }
 
 export interface UserDetails {
@@ -35,7 +35,7 @@ export interface Price {
   active?: boolean;
   description?: string;
   unit_amount?: number;
-  current?: string;
+  currency?: string;
   type?: Stripe.Price.Type;
   interval?: Stripe.Price.Recurring.Interval;
   interval_count?: number;
@@ -51,7 +51,7 @@ export interface Subscription {
   metadata?: Stripe.Metadata;
   price_id?: string;
   quantity?: number;
-  cancel_at_period_end?: SVGAnimatedBoolean;
+  cancel_at_period_end?: boolean;
   created: string;
   current_period_start: string;
   current_period_end: string;
