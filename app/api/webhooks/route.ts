@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 
-import { stripe } from '@libs/stripe';
+import { stripe } from '@/libs/stripe';
 import {
   upsertProductRecord,
   upsertPriceRecord,
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.log('Error message: ' + error.message);
     return new NextResponse();
-    return new NextResponse(`Webook Error: ${error.message}`, { status: 400 });
+    return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
   }
 
   if (relevantEvents.has(event.type)) {
@@ -75,5 +75,5 @@ export async function POST(request: Request) {
       return new NextResponse('Webhook error', { status: 400 });
     }
   }
-  return NextResponse.json({ recevied: true }, { status: 200 });
+  return NextResponse.json({ received: true }, { status: 200 });
 }
