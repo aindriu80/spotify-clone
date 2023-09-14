@@ -4,6 +4,7 @@ import { Price, ProductWithPrice } from '@/types';
 import Modal from './Modal';
 import Button from './Button';
 import { useState } from 'react';
+import useSubscribeModal from '@/hooks/useSubscribeModal';
 import { useUser } from '@/hooks/useUser';
 import toast from 'react-hot-toast';
 import { postData } from '@/libs/helpers';
@@ -23,9 +24,15 @@ const formatPrice = (price: Price) => {
   return priceString;
 };
 const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
+  const subscribeModal = useSubscribeModal();
   const { user, isLoading, subscription } = useUser();
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
 
+  const onChange = (open: boolean) => {
+    if (!open) {
+      subscribeModal.onClose();
+    }
+  };
   const handleCheckout = async (price: Price) => {
     setPriceIdLoading(price.id);
 
@@ -41,20 +48,24 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
 
     try {
       const { sessionId } = await postData({
-        url: 'api/create-checkout-session',
+        url: '/api/create-checkout-session',
         data: { price },
       });
 
       const stripe = await getStripe();
       stripe?.redirectToCheckout({ sessionId });
     } catch (error) {
-      toast.error((error as Error)?.message);
+      return toast.error((error as Error)?.message);
     } finally {
       setPriceIdLoading(undefined);
     }
   };
 
-  let content = <div className="">No product available.</div>;
+  let content = (
+    <div className="text-center">
+      No products available.
+    </div>
+  )
 
   if (products.length) {
     content = (
@@ -80,18 +91,18 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
   }
 
   if (subscription) {
-    content = <div className="text-center">Already subscribed.</div>;
-  }
-
-  if (subscription) {
-    content = <div className="text-center">Already subscribed</div>;
+    content = (
+      <div className="text-center">
+        Already subscribed.
+      </div>
+    )
   }
   return (
     <Modal
       title="Only for premium users"
-      description="Listen to music with Spotify Premium "
-      isOpen
-      onChange={() => {}}
+      description="Listen to music with Spotify Premium"
+      isOpen={subscribeModal.isOpen}
+      onChange={onChange}
     >
       {content}
     </Modal>
