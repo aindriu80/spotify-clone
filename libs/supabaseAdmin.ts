@@ -19,7 +19,7 @@ const upsertProductRecord = async (product: Stripe.Product) => {
     name: product.name,
     description: product.description ?? undefined,
     image: product.images?.[0] ?? null,
-    metadata: product.metadata,
+    metadata: product.metadata
   };
 
   const { error } = await supabaseAdmin.from('products').upsert([productData]);
@@ -112,36 +112,33 @@ const copyBillingDetailsToCustomer = async (
   if (error) throw error;
 };
 
-
-const manageSubscriptionStatusChange = async(
-  subscriptionId:string,
-  customerId:string,
+const manageSubscriptionStatusChange = async (
+  subscriptionId: string,
+  customerId: string,
   createAction = false
 ) => {
-  const {data:customerData, error:noCustomerError} = await supabaseAdmin
-  .from('customers')
-  .select('id')
-  .eq('stripe_customer_id',customerId)
-  .single()
+  const { data: customerData, error: noCustomerError } = await supabaseAdmin
+    .from('customers')
+    .select('id')
+    .eq('stripe_customer_id', customerId)
+    .single();
 
-  if(noCustomerError)throw noCustomerError
+  if (noCustomerError) throw noCustomerError;
 
-  const {id: uuid} = customerData!
+  const { id: uuid } = customerData!;
 
-  const subscription = await stripe.subscriptions.retrieve(
-    subscriptionId,
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+    expand: ['default_payment_method'],
+  });
+
+  const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] =
     {
-      expand:["default_payment_method"]
-    }
-  )
-
-  const subscriptionData:Database["public"]["Tables"]["subscriptions"]["Insert"]={
-    id:subscription.id,
-    user_id:uuid,
-    metadata:subscription.metadata,
+      id: subscription.id,
+      user_id: uuid,
+      metadata: subscription.metadata,
       // @ts-ignore
-    status:subscription.status,
-    price_id: subscription.items.data[0].price.id,
+      status: subscription.status,
+      price_id: subscription.items.data[0].price.id,
       // @ts-ignore
       quantity: subscription.quantity,
       cancel_at_period_end: subscription.cancel_at_period_end,
@@ -166,29 +163,30 @@ const manageSubscriptionStatusChange = async(
         : null,
       trial_end: subscription.trial_end
         ? toDateTime(subscription.trial_end).toISOString()
-        : null
+        : null,
     };
 
-  const {error}=  await supabaseAdmin
-  .from('subscription')
-  .upsert([subscriptionData]);
+  const { error } = await supabaseAdmin
+    .from('subscription')
+    .upsert([subscriptionData]);
 
-  if(error) throw error;
+  if (error) throw error;
 
-  console.log(`Inserted / Updated subscription [${subscription.id} for ${uuid}]`)
+  console.log(
+    `Inserted / Updated subscription [${subscription.id} for ${uuid}]`
+  );
 
-  if(createAction && subscription.default_payment_method && uuid){
+  if (createAction && subscription.default_payment_method && uuid) {
     await copyBillingDetailsToCustomer(
       uuid,
       subscription.default_payment_method as Stripe.PaymentMethod
-    )
+    );
   }
-}
+};
 
-export{
+export {
   upsertProductRecord,
   upsertPriceRecord,
-  createOrRetrieveACustomer, 
-  manageSubscriptionStatusChange, 
-
-}
+  createOrRetrieveACustomer,
+  manageSubscriptionStatusChange,
+};

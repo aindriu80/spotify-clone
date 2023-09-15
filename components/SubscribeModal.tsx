@@ -1,14 +1,15 @@
 'use client';
 
-import { Price, ProductWithPrice } from '@/types';
-import Modal from './Modal';
-import Button from './Button';
 import { useState } from 'react';
 import useSubscribeModal from '@/hooks/useSubscribeModal';
 import { useUser } from '@/hooks/useUser';
 import toast from 'react-hot-toast';
 import { postData } from '@/libs/helpers';
 import { getStripe } from '@/libs/stripeClient';
+import { Price, ProductWithPrice } from '@/types';
+
+import Modal from './Modal';
+import Button from './Button';
 
 interface SubscribeModalProps {
   products: ProductWithPrice[];
@@ -33,6 +34,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
       subscribeModal.onClose();
     }
   };
+
   const handleCheckout = async (price: Price) => {
     setPriceIdLoading(price.id);
 
@@ -61,11 +63,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
     }
   };
 
-  let content = (
-    <div className="text-center">
-      No products available.
-    </div>
-  )
+  let content = <div className="text-center">No products available.</div>;
 
   if (products.length) {
     content = (
@@ -91,17 +89,14 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
   }
 
   if (subscription) {
-    content = (
-      <div className="text-center">
-        Already subscribed.
-      </div>
-    )
+    content = <div className="text-center">Already subscribed.</div>;
   }
   return (
     <Modal
       title="Only for premium users"
       description="Listen to music with Spotify Premium"
-      isOpen={subscribeModal.isOpen}
+      isOpen
+      // isOpen={subscribeModal.isOpen}
       onChange={onChange}
     >
       {content}
